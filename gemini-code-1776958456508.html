@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colby's Coffee | Artisanal Brews & Bites</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'DM Serif Display', serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-[#F5F1ED] text-[#2D1B14] scroll-smooth">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-2xl font-serif font-bold tracking-tight">
+                Colby’s <span class="text-[#D4A373]">Coffee</span>
+            </div>
+            
+            <div class="hidden md:flex gap-8 font-medium">
+                <a href="#menu" class="hover:text-[#D4A373] transition">Menu</a>
+                <a href="#" class="hover:text-[#D4A373] transition">Our Story</a>
+                <a href="#" class="hover:text-[#D4A373] transition">Locations</a>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <button class="relative group" onclick="toggleCart()">
+                    <span class="text-2xl">🛒</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-[#4B2C20] text-white text-[10px] rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="py-20 px-6 text-center bg-[#EDE7E0]">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">Handcrafted coffee, <br/>hearty sandwiches.</h1>
+            <p class="text-xl text-stone-600 mb-10">Fresh ingredients and locally roasted beans, prepared daily at Colby's.</p>
+            <a href="#menu" class="inline-block bg-[#4B2C20] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#5E3A2D] transition-all transform hover:scale-105 shadow-lg">
+                View Full Menu
+            </a>
+        </div>
+    </section>
+
+    <div class="sticky top-20 bg-[#F5F1ED]/95 backdrop-blur-sm py-6 border-b border-stone-200 z-40">
+        <div class="max-w-7xl mx-auto px-6 flex gap-4 overflow-x-auto no-scrollbar">
+            <button onclick="filterMenu('all')" class="category-btn whitespace-nowrap px-6 py-2 rounded-full bg-[#4B2C20] text-white font-bold">All Items</button>
+            <button onclick="filterMenu('breakfast')" class="category-btn whitespace-nowrap px-6 py-2 rounded-full bg-white border border-stone-300 hover:border-[#4B2C20] transition">Breakfast</button>
+            <button onclick="filterMenu('sandwiches')" class="category-btn whitespace-nowrap px-6 py-2 rounded-full bg-white border border-stone-300 hover:border-[#4B2C20] transition">Sandwiches</button>
+            <button onclick="filterMenu('drinks')" class="category-btn whitespace-nowrap px-6 py-2 rounded-full bg-white border border-stone-300 hover:border-[#4B2C20] transition">Drinks</button>
+        </div>
+    </div>
+
+    <main id="menu" class="max-w-7xl mx-auto px-6 py-16">
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            </div>
+    </main>
+
+    <div id="cart-sidebar" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="toggleCart()"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl p-8 flex flex-col">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-serif font-bold">Your Order</h2>
+                <button onclick="toggleCart()" class="text-3xl">&times;</button>
+            </div>
+            <div id="cart-items" class="flex-grow overflow-y-auto space-y-4">
+                <p class="text-stone-500 italic">Your cart is currently empty.</p>
+            </div>
+            <div class="border-t border-stone-200 pt-6 mt-6">
+                <div class="flex justify-between text-xl font-bold mb-6">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="w-full bg-[#D4A373] text-[#2D1B14] py-4 rounded-xl font-bold text-lg hover:bg-[#C29262] transition">
+                    Checkout Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: "Signature Latte", price: 5.50, category: "drinks", desc: "Double espresso with silky steamed milk.", img: "https://images.unsplash.com/photo-1541167760496-162955ed8a9f?auto=format&fit=crop&w=400&q=80" },
+            { id: 2, name: "Bacon & Egg Brioche", price: 9.00, category: "breakfast", desc: "Farm egg, crispy bacon, aged cheddar.", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400&q=80" },
+            { id: 3, name: "Pesto Chicken Panini", price: 12.50, category: "sandwiches", desc: "Grilled chicken, fresh pesto, mozzarella.", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80" },
+            { id: 4, name: "Iced Matcha Tea", price: 6.25, category: "drinks", desc: "Ceremonial grade matcha over ice.", img: "https://images.unsplash.com/photo-1515823662972-da630ff7a100?auto=format&fit=crop&w=400&q=80" },
+            { id: 5, name: "Avocado Toast", price: 10.50, category: "breakfast", desc: "Sourdough, radish, chili flakes.", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400&q=80" },
+            { id: 6, name: "Cold Brew", price: 4.75, category: "drinks", desc: "12-hour steep, smooth and bold.", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80" }
+        ];
+
+        let cart = [];
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products
+                .filter(p => filter === 'all' || p.category === filter)
+                .map(p => `
+                    <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-stone-100 group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold font-serif">${p.name}</h3>
+                                <span class="font-bold text-[#4B2C20]">$${p.price.toFixed(2)}</span>
+                            </div>
+                            <p class="text-stone-500 text-sm mb-8 leading-relaxed">${p.desc}</p>
+                            <button onclick="addToCart(${p.id})" class="w-full bg-[#F5F1ED] text-[#4B2C20] py-3 rounded-xl font-bold hover:bg-[#4B2C20] hover:text-white transition-colors duration-300">
+                                Add to Order
+                            </button>
+                        </div>
+                    </article>
+                `).join('');
+        }
+
+        function filterMenu(cat) {
+            renderProducts(cat);
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-[#4B2C20]', 'text-white');
+                btn.classList.add('bg-white', 'text-stone-600');
+            });
+            event.target.classList.add('bg-[#4B2C20]', 'text-white');
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const cartItems = document.getElementById('cart-items');
+            const totalDisplay = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-stone-500 italic">Your cart is currently empty.</p>';
+                totalDisplay.innerText = '$0.00';
+                return;
+            }
+
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div class="flex justify-between items-center bg-stone-50 p-4 rounded-lg">
+                    <div>
+                        <p class="font-bold text-sm">${item.name}</p>
+                        <p class="text-xs text-stone-500">$${item.price.toFixed(2)}</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-red-400 text-sm hover:text-red-600">Remove</button>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            totalDisplay.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+
+        // Initial Load
+        renderProducts();
+    </script>
+</body>
+</html>
