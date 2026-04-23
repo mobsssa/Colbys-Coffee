@@ -6,6 +6,7 @@
     <title>Colby's Coffee | Brews & Bites</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="logo.jpeg">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-serif { font-family: 'DM Serif Display', serif; }
@@ -17,7 +18,7 @@
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200">
         <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <img src="logo.png" alt="Colby's Coffee Logo" class="h-12 w-12 rounded-full object-cover">
+                <img src="logo.jpeg" alt="Colby's Coffee Logo" class="h-12 w-12 rounded-full object-cover border border-stone-200">
                 <div class="text-2xl font-serif font-bold tracking-tight">
                     Colby’s <span class="text-[#D4A373]">Coffee</span>
                 </div>
@@ -37,7 +38,7 @@
 
     <section class="py-24 px-6 text-center bg-[#EDE7E0] border-b border-stone-200">
         <div class="max-w-3xl mx-auto">
-            <img src="logo.png" alt="Featured Logo" class="h-32 w-32 mx-auto mb-8 rounded-full shadow-lg border-4 border-white">
+            <img src="logo.jpeg" alt="Featured Logo" class="h-32 w-32 mx-auto mb-8 rounded-full shadow-lg border-4 border-white">
             <h1 class="text-5xl md:text-6xl font-serif font-bold mb-6">Elevate Your Morning.</h1>
             <p class="text-xl text-stone-600 mb-10 leading-relaxed">
                 Colby’s Coffee offers a warm, artisanal escape featuring locally roasted brews and handcrafted sandwiches made with fresh, premium ingredients.
@@ -65,24 +66,24 @@
     <footer class="bg-[#2D1B14] text-[#F5F1ED] py-16 px-6">
         <div class="max-w-7xl mx-auto text-center">
             <div class="flex justify-center items-center gap-3 mb-6">
-                <img src="logo.png" class="h-10 w-10 rounded-full grayscale brightness-200">
+                <img src="logo.jpeg" class="h-10 w-10 rounded-full grayscale brightness-200">
                 <span class="font-serif text-2xl font-bold">Colby's Coffee</span>
             </div>
-            <p class="text-stone-400 max-w-md mx-auto mb-8">The perfect neighborhood destination for an elevated morning routine or a cozy afternoon break.</p>
+            <p class="text-stone-400 max-w-md mx-auto mb-8">Serving Hackensack with artisanal passion and fresh ingredients.</p>
             <p class="text-xs text-stone-500 uppercase tracking-widest">Est. 2024 • Hackensack, NJ</p>
         </div>
     </footer>
 
     <div id="cart-sidebar" class="fixed inset-0 z-[60] hidden">
         <div class="absolute inset-0 bg-black/50" onclick="toggleCart()"></div>
-        <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl p-8">
+        <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl p-8 flex flex-col">
             <h2 class="text-2xl font-serif font-bold mb-8">Your Order</h2>
-            <div id="cart-items" class="space-y-4 mb-8 h-[60vh] overflow-y-auto"></div>
-            <div class="border-t pt-4">
+            <div id="cart-items" class="flex-grow space-y-4 overflow-y-auto"></div>
+            <div class="border-t pt-6">
                 <div class="flex justify-between font-bold text-lg mb-6">
                     <span>Total</span> <span id="cart-total">$0.00</span>
                 </div>
-                <button class="w-full bg-[#D4A373] py-4 rounded-xl font-bold">Checkout</button>
+                <button class="w-full bg-[#D4A373] py-4 rounded-xl font-bold text-[#2D1B14]">Checkout</button>
             </div>
         </div>
     </div>
@@ -92,8 +93,8 @@
             { id: 1, name: "Signature Latte", price: 5.50, category: "drinks", desc: "Double espresso with silky steamed milk.", img: "https://images.unsplash.com/photo-1541167760496-162955ed8a9f?auto=format&fit=crop&w=400" },
             { id: 2, name: "Bacon & Egg Brioche", price: 9.00, category: "breakfast", desc: "Farm egg, crispy bacon, aged cheddar.", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400" },
             { id: 3, name: "Pesto Chicken Panini", price: 12.50, category: "sandwiches", desc: "Grilled chicken, fresh pesto, mozzarella.", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400" },
-            { id: 4, name: "Cold Brew", price: 4.75, category: "drinks", desc: "12-hour steep, smooth and bold.", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400" },
-            { id: 5, name: "Avocado Toast", price: 10.50, category: "breakfast", desc: "Sourdough, radish, chili flakes.", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400" }
+            { id: 4, name: "Iced Matcha", price: 6.25, category: "drinks", desc: "Ceremonial grade matcha over ice.", img: "https://images.unsplash.com/photo-1515823662972-da630ff7a100?auto=format&fit=crop&w=400" },
+            { id: 5, name: "Avocado Toast", price: 10.50, category: "breakfast", desc: "Sourdough, radish, and chili flakes.", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400" }
         ];
 
         let cart = [];
@@ -115,19 +116,18 @@
         }
 
         function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            cart.push(product);
+            const p = products.find(x => x.id === id);
+            cart.push(p);
             updateCart();
         }
 
         function updateCart() {
             document.getElementById('cart-count').innerText = cart.length;
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const total = cart.reduce((s, i) => s + i.price, 0);
             document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
-            
-            document.getElementById('cart-items').innerHTML = cart.map((item, i) => `
-                <div class="flex justify-between text-sm">
-                    <span>${item.name}</span> <span>$${item.price.toFixed(2)}</span>
+            document.getElementById('cart-items').innerHTML = cart.map(i => `
+                <div class="flex justify-between text-sm py-2 border-b border-stone-50">
+                    <span>${i.name}</span> <span class="font-bold">$${i.price.toFixed(2)}</span>
                 </div>
             `).join('');
         }
